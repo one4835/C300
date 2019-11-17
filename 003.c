@@ -5,9 +5,9 @@
 
 main()
 {
-    double z:
+    double z;
 
     z = X + PI;
 
-    printf("%f",z );
+    printf("%f",z);
 }
