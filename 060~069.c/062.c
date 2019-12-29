@@ -6,10 +6,10 @@ void main(void)
     char string1[100];
     char string2[100];
 
-    printf("첫 번째 단어를 입력하세요!\n");
+    printf("Enter the first word!\n");
     gets(string1);
 
-    printf("두 번째 단어를입력하세요!\n");
+    printf("Enter the second word!\n");
     gets(string2);
 
     strcat(string1,string2);

@@ -8,8 +8,8 @@ void main (void)
     char string[100];
     int ret;
 
-    printf("영단어를 입력한 후 Enter키를 치세요!\n");
-    printf("sky로 시작되는 단어를 입력하면 프로그램이 종료됩니다.\n");
+    printf("After entering English words, press enter.\n");
+    printf("Entering a word beginning with sky will exit the program.\n");
 
     do
     {
