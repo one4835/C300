@@ -17,5 +17,5 @@ void main (void)
         strnset(string,string[0]);
         puts(string);
 
-    }while(1)
+    }while(1);
 }
