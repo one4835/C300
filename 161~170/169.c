@@ -10,7 +10,8 @@ void main(void)
 
     t =*localtime(&now);
 
-    printf("date and time now:%4d.%d.%d %d:%d:%d\n",
+    printf("date and time now- date: %4d.  %d.  %d time:%d:    %d:    %d\n",
     t.tm_year +1900, t.tm_mon +1,t.tm_mday,
     t.tm_hour, t.tm_min, t.tm_sec);
+    printf("\t\t\t year month date   hour minuite second");
 }
