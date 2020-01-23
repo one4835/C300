@@ -8,7 +8,7 @@ void main(void)
 
     time(&now);
 
-    t =*localtime(&now);
+    t =*gmtime(&now);
 
     printf("date and time now- date: %4d.%d.%d time:%d:%d:%d\n",
     t.tm_year +1900, t.tm_mon +1,t.tm_mday,

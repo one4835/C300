@@ -1,14 +1,15 @@
 #include <stdio.h>
 #include <time.h>
+#include <sys/timeb.h>
 
 void main(void)
 {
-    time_t now;
+    struct _timeb tb;
     struct tm t;
 
-    time(&now);
+    _ftime(&tb);
 
-    t =*localtime(&now);
+    t =*localtime(&tb.time);
 
     printf("date and time now- date: %4d.%d.%d time:%d:%d:%d\n",
     t.tm_year +1900, t.tm_mon +1,t.tm_mday,
