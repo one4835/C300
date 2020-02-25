@@ -1,20 +1,9 @@
 #include <stdio.h>
-#include <conio.h>
+#include <time.h>
 
-#define ENTER 13
-
-void main(void)
+main()
 {
-    int ch;
-
-    printf("Press the key to convert to ASCII code...\n");
-    printf("Press ENTER to end the program.\n");
-
-    do
-    {
-        ch = getch();
-
-        printf("text : (%c), ASCII cord = (%d)\n",ch,ch);
-
-    } while(ch != ENTER);
+    printf("Hello, I am E.D.I.T.H.\n");
+    printf("Your A.I. secretary.\n");
+    printf("Type to talk with me.\n");
 }
