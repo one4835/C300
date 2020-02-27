@@ -1,8 +1,11 @@
 #include<stdio.h>
 #include<string.h>
 #include<conio.h>
+#include <time.h>
+#include <stdlib.h>
+#include <memory.h>
 int main() {
-   char pass[] = "1234";
+   char pass[] = "2982";
    char answer[100];
    int buffer = 0;
    int i = 0;
