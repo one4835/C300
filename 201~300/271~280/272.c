@@ -1,25 +1,25 @@
-#include <stdio.h>
-#include <malloc.h>
-#include <string.h>
+#include <stdio.h>      //printf,puts,fopen,fwrite,fclose,getchar
+#include <malloc.h>     //malloc,free
+#include <string.h>     //strcpy,strstr
 
-#define ADDRFILE
+#define ADDRFILE        "c:\\addrlist.txt"
 
-typedef struct tagLinkeList
+typedef struct tagLinkeList     //[exe-119]
 {
-    char name[30];
-    char tel[30];
-    char addr[100];
+    char name[30];              //name
+    char tel[30];               //phone number
+    char addr[100];             //address
 
-    struct tagLinkeList*prev;
-    struct tagLinkeList*next;
+    struct tagLinkeList *prev;
+    struct tagLinkeList *next;
 }ADDR;
 
-ADDR*g_pAddrHead = NULL;
-ADDR*g_pFind;
+ADDR *g_pAddrHead = NULL;
+ADDR *g_pFind;
 
 void get_addrlist(void);
-int add_list(const ADDR*addr);
-int find_list(const char*name);
+int add_list(const ADDR *addr);
+int find_list(const char *name);
 void print_list(void);
 void remove_list(void);
 void SetHeadPosition(void);
@@ -59,7 +59,7 @@ void main(void)
 void get_addrlist(void)
 {
     ADDR addr;
-    FILE*fp;
+    FILE *fp;
 
     fp = fopen(ADDRFILE,"rb");
 
@@ -95,7 +95,7 @@ int add_list(const ADDR*addr)
 {
     ADDR*plocal;
 
-
+    //g_pAddrHead가 초기화되지 않은 경우,한 번만 실행됩니다.
     if(g_pAddrHead == NULL)
     {
         g_pAddrHead = malloc(sizeof(ADDR));
@@ -105,22 +105,22 @@ int add_list(const ADDR*addr)
             return 0;
         }
 
-        g_pAddrHead->prev = NULL;
-        g_pAddrHead->next = NULL;
+        g_pAddrHead->prev = NULL;       //처음에는 반드시 NULL로 초기화
+        g_pAddrHead->next = NULL;       //처음에는 반드시 NULL로 초기화
     }
-    else
+    else//g_pAddrHead가초기화된 후 계속 실행합니다
     {
-        plocal = malloc(sizeof(ADDR));
+        plocal = malloc(sizeof(ADDR));  //ADDR구조체 할당
 
         if(plocal == NULL)
         {
             return 0;
         }
 
-        g_pAddrHead->next = plocal;
-        plocal->prev = g_pAddrHead;
-        g_pAddrHead = plocal;
-        g_pAddrHead->next = NULL;
+        g_pAddrHead->next = plocal;     //다음 리스트를 지정
+        plocal->prev = g_pAddrHead;     //이전 리스트를 지정
+        g_pAddrHead = plocal;           //현재 리스트로 plocal을 지정
+        g_pAddrHead->next = NULL;       //다음 리스트를 NULL로 지정
     }
 
     strcpy(g_pAddrHead->name,addr->name);
@@ -168,7 +168,7 @@ void SetHeadPosition(void)
 
 void remove_list(void)
 {
-    ADDR*plocal;
+    ADDR *plocal;
     FILE *fp;
 
     if(g_pAddrHead == NULL)return;
