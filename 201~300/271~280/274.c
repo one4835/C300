@@ -43,7 +43,7 @@ void main(void)
 
     while(1)
     {
-        printf("\n[1]New[2]serrch[3]change[4]remove[5]print[S]save[Q]quit");
+        printf("\n[1]New[2]search[3]change[4]remove[5]print[S]save[Q]quit");
 
         ch = getch();
 
@@ -66,7 +66,7 @@ void main(void)
                 }
 
                 Remove_addr();return;
-                default :printf("\n\n Press 1~5 orS/Q\n\n")break;
+            default :printf("\n\n Press 1~5 orS/Q\n\n");break;
         }
     }
 }
@@ -86,7 +86,7 @@ void get_addrlist(void)
 
     while(!feof(fp))
     {
-        fread(&addr,size(ADDR),1,fp);
+        fread(&addr,sizeof(ADDR),1,fp);
 
         if(ferror(fp))
         {
@@ -108,7 +108,7 @@ void get_addrlist(void)
 
 int add_list(const ADDR*addr)
 {
-    ADDR *plocal*pn = g_pAddrHead;
+    ADDR *plocal,*pn = g_pAddrHead;
 
     SetHeadPosition();
 
@@ -285,7 +285,7 @@ void Motify_addr(void)
 
     while(1)
     {
-        printf("\n\nName to change:");get(name);
+        printf("\n\nName to change:");gets(name);
 
         if(strlen(name)==0)return;
 
@@ -327,6 +327,152 @@ void Delete_addr(void)
 
     while(1)
     {
-        printf("\n\n Name to delete:")gets(name);
+        printf("\n\n Name to delete:");gets(name);
+
+        if(strlen(name)==0)return;
+
+        if(find_list(name)==0)
+        {
+            puts("Can't find the name to delete");
+            continue;
+        }
+        break;
     }
+
+    puts(g_pFind->name);
+    puts(g_pFind->tel);
+    puts(g_pFind->addr);
+
+    printf("Would you delete %s(y/n)?",name);
+    ch = getch();
+    fflush(stdin);
+
+    if(ch =='Y'||ch =='y')
+    {
+        if(g_pFind->prev == NULL)
+        {
+            if(g_pFind->next == NULL)
+            {
+                free(g_pFind);
+                g_pAddrHead =NULL;
+            }
+            else
+            {
+                plocal = g_pFind->next;
+                free(g_pFind);
+                plocal->prev = NULL;
+                g_pAddrHead = plocal;
+            }
+        }
+
+        else if(g_pFind->next == NULL)
+        {
+            plocal = g_pFind->prev;
+            free(g_pFind);
+            plocal->next = NULL;
+            g_pAddrHead = plocal;
+        }
+
+        else
+        {
+            plocal = g_pFind->prev;
+            plocal->next = g_pFind->next;
+
+            plocal = g_pFind->next;
+            plocal->prev = g_pFind->prev;
+
+            free(g_pFind);
+            g_pAddrHead = plocal;
+        }
+
+        g_bSaved = 0;
+
+        printf("\n\nSearched address data deleted\n\n");
+    }
+}
+
+void Print_addr(void)
+{
+    int count = 1;
+    ADDR*plocal;
+
+    SetHeadPosition();
+
+    plocal = g_pAddrHead;
+
+
+    while(plocal->prev)
+    {
+        plocal = plocal->prev;
+    }
+
+    printf("\n\n");
+
+
+    while(plocal)
+    {
+        printf("Number.%d\n",count++);
+        puts(plocal->name);
+        puts(plocal->tel);
+        printf("%s\n\n",plocal->addr);
+
+        printf("Press any key,(Quit:Q)\n\n");
+        if(getch()=='q')return;
+
+        plocal = plocal->next;
+    }
+}
+
+void Save_addr(void)
+{
+    ADDR*plocal;
+    FILE *fp;
+
+    if(g_pAddrHead == NULL)return;
+
+    fp = fopen(ADDRFILE,"w+b");
+
+    if(fp == NULL)
+    {
+        perror("File opening");
+        return;
+    }
+
+    SetHeadPosition();
+
+
+    while(g_pAddrHead)
+    {
+        plocal = g_pAddrHead->next;
+
+        fwrite(g_pAddrHead,sizeof(ADDR),1,fp);
+
+        g_pAddrHead = plocal;
+    }
+
+    printf("\n Saved all data in the file");
+    g_bSaved = 1;
+
+    fclose(fp);
+}
+
+void Remove_addr(void)
+{
+    ADDR *plocal;
+
+    if(g_pAddrHead == NULL)return;
+
+    SetHeadPosition();
+
+
+    while(g_pAddrHead)
+    {
+        plocal = g_pAddrHead->next;
+
+        free(g_pAddrHead);
+
+        g_pAddrHead = plocal;
+    }
+
+    g_pAddrHead = NULL;
 }
