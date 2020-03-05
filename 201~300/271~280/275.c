@@ -27,7 +27,7 @@ FILE *fp;
 char buff[200];
 int i = 0,j,k;
 
-void main(int argc,char,*argv[])
+void main(int argc,char*argv[])
 {
     if(argc<3)
     {
@@ -60,13 +60,13 @@ void main(int argc,char,*argv[])
         if(feof(fp))break;
 
         D[i].kunmujigubun = buff[29];
-        D[i].insakokwa    = buff[28];       = buff[28] = 0;
-        D[i].mechulpoint  = atoi(&buff[25]);       = buff[28] = 0;
-        D[i].mechulak     = atoi(&buff[22]);       = buff[25] = 0;
-        D[i].kongjeak     = atoi(&buff[19]);       = buff[19] = 0;
-        D[i].sangyuikum   = atoi(&buff[16]);       = buff[16] = 0;
-        D[i].bonbong      = atoi(&buff[13]);       = buff[13] = 0;
-        strncpy(D[i].mail,&buff[9],4);             = buff[9] = 0;
+        D[i].insakokwa    = buff[28];              buff[28] = 0;
+        D[i].mechulpoint  = atoi(&buff[25]);       buff[28] = 0;
+        D[i].mechulak     = atoi(&buff[22]);       buff[25] = 0;
+        D[i].kongjeak     = atoi(&buff[19]);       buff[19] = 0;
+        D[i].sangyuikum   = atoi(&buff[16]);       buff[16] = 0;
+        D[i].bonbong      = atoi(&buff[13]);       buff[13] = 0;
+        strncpy(D[i].mail,&buff[9],4);             buff[9] = 0;
         D[i].hobong       = atoi(&buff[7]);
         D[i].code         =buff[6];
         strncpy(D[i].no,&buff[0],6);
@@ -86,4 +86,37 @@ void main(int argc,char,*argv[])
             S[j++] = D[i];
         }
     }
+
+    for(i=0;i<j-1;i++)
+    {
+        for(k=i+1;k<j;k++)
+        {
+            if(S[i].hap>S[k].hap)
+            {
+                T = S[i];
+                S[i]=S[k];
+                S[k]=T;
+            }
+            else if(S[i]hap == S[k].hap)
+            {
+                if(strcmp(S[i].no,S[k].no)>0)
+                {
+                    T = S[i];
+                    S[i]=S[k];
+                    S[k]=T;
+                }
+            }
+        }
+    }
+
+    /*
+    for(i=0;i<10;i++)
+    {
+        printf("%3d%6.6s\n",S[i]hap,S[i].no);
+    }
+    */
+
+    fp = fopen(ANSWERFILE,"w+");
+    fprintf(fp,"%d %d %d",nStartLine,nEndLine,S[4].hap);
+    fclose(fp);
 }
