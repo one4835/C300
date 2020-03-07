@@ -92,5 +92,5 @@ void main(int argc,char*argv[])
 
         fp = fopen(ANSWERFILE,"w+");
         fprintf(fp,"%d %d %d",nStartLine,nEndLine,hap);
-        fclose;   
+        fclose;  
 }
