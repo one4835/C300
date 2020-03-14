@@ -55,5 +55,9 @@ void main(int argc,char *argv[])
         WSACleanup();return;
     }
 
-    if
+    if(WSACleanup()!=0)
+    {
+        printf("WSACleanup failiure,errorcode %u\n",WSAGetLastError());
+        return;
+    }
 }
